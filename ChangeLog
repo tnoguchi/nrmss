@@ -1,0 +1,8 @@
+
+> svn co https://nrmss.googlecode.com/svn/trunk/ nrmss --username n071316
+> cd ..
+> rails nrmss
+> mv config/database{,.example}.yml
+> svn ps svn:ignore "*.log" log/
+> svn add .
+> svn revert log/*
