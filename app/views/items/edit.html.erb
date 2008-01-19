@@ -1,0 +1,57 @@
+<h1>Editing item</h1>
+
+<%= error_messages_for :item %>
+
+<% form_for(@item) do |f| %>
+  <p>
+    <b>Url</b><br />
+    <%= f.text_field :url %>
+  </p>
+
+  <p>
+    <b>User description</b><br />
+    <%= f.text_field :user_description %>
+  </p>
+
+  <p>
+    <b>Rms type</b><br />
+    <%= f.text_field :rms_type %>
+  </p>
+
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Description</b><br />
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <b>Price</b><br />
+    <%= f.text_field :price %>
+  </p>
+
+  <p>
+    <b>Amount</b><br />
+    <%= f.text_field :amount %>
+  </p>
+
+  <p>
+    <b>Created at</b><br />
+    <%= f.datetime_select :created_at %>
+  </p>
+
+  <p>
+    <b>Updated at</b><br />
+    <%= f.datetime_select :updated_at %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @item %> |
+<%= link_to 'Back', items_path %>

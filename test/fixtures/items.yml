@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  url: MyString
+  user_description: MyString
+  rms_type: 1
+  name: MyString
+  description: MyText
+  price: 1
+  amount: 1
+  created_at: 2008-01-19 15:08:53
+  updated_at: 2008-01-19 15:08:53
+
+two:
+  url: MyString
+  user_description: MyString
+  rms_type: 1
+  name: MyString
+  description: MyText
+  price: 1
+  amount: 1
+  created_at: 2008-01-19 15:08:53
+  updated_at: 2008-01-19 15:08:53

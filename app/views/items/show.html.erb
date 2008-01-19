@@ -1,0 +1,48 @@
+<p>
+  <b>Url:</b>
+  <%=h @item.url %>
+</p>
+
+<p>
+  <b>User description:</b>
+  <%=h @item.user_description %>
+</p>
+
+<p>
+  <b>Rms type:</b>
+  <%=h @item.rms_type %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @item.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @item.description %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%=h @item.price %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%=h @item.amount %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @item.created_at %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%=h @item.updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', items_path %>
