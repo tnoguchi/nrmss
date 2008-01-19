@@ -14,6 +14,9 @@
 > svn ps svn:ignore "*.sqlite3" db/
 > ruby script/generate scaffold group name:string description:string preference:integer created_at:timestamp updated_at:timestamp
 > ruby script/generate scaffold item url:string user_description:string rms_type:integer name:string description:text price:integer amount:integer created_at:timestamp updated_at:timestamp
-> ruby script/generate model
+> ruby script/generate model assign
 > rake db:migrate
 > svn add app/**/* app/**/**/* db/* public/**/ test/*
+> svn ci
+
+> ruby script/generate controller welcome

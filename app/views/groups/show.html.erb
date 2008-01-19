@@ -14,6 +14,17 @@
 </p>
 
 <p>
+  <b>Registered items:</b>
+  <%=h @group.items.size %>
+</p>
+
+<ul>
+<%- @group.items.each do |item| -%>
+  <li><%= link_to "#{h item.name}(#{h item.price} yen)", item_url(item) %></li>
+<%- end -%>
+</ul>
+
+<!--p>
   <b>Created at:</b>
   <%=h @group.created_at %>
 </p>
@@ -21,7 +32,7 @@
 <p>
   <b>Updated at:</b>
   <%=h @group.updated_at %>
-</p>
+</p-->
 
 
 <%= link_to 'Edit', edit_group_path(@group) %> |

@@ -9,8 +9,8 @@
     <th>Description</th>
     <th>Price</th>
     <th>Amount</th>
-    <th>Created at</th>
-    <th>Updated at</th>
+    <!--th>Created at</th>
+    <th>Updated at</th-->
   </tr>
 
 <% for item in @items %>
@@ -22,8 +22,8 @@
     <td><%=h item.description %></td>
     <td><%=h item.price %></td>
     <td><%=h item.amount %></td>
-    <td><%=h item.created_at %></td>
-    <td><%=h item.updated_at %></td>
+    <!--td><%=h item.created_at %></td>
+    <td><%=h item.updated_at %></td-->
     <td><%= link_to 'Show', item %></td>
     <td><%= link_to 'Edit', edit_item_path(item) %></td>
     <td><%= link_to 'Destroy', item, :confirm => 'Are you sure?', :method => :delete %></td>

@@ -13,7 +13,7 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.xml
   def show
-    @group = Group.find(params[:id])
+    @group = Group.find(params[:id], :include => [ :items ] ) #:items
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,9 +42,23 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(params[:group])
 
+    @successful = true
+    flash[:notice] = ""
+    #begin
+      items = Rakuten::Url.raw_string_to_items(params[:urls].to_s).compact
+    #rescue
+    #  flash[:notice] += "error"
+    #end
+
+    @successful &&= @group.save
+    @successful && items.each do |item|
+      $m.debug item
+      Assign.new(:group_id => @group.id, :item_id => item.id).save! if item.is_a?(Item)
+    end
+
     respond_to do |format|
-      if @group.save
-        flash[:notice] = 'Group was successfully created.'
+      if @successful
+        flash[:notice] += 'Group was successfully created.'
         format.html { redirect_to(@group) }
         format.xml  { render :xml => @group, :status => :created, :location => @group }
       else
