@@ -31,8 +31,7 @@ Rails::Initializer.run do |config|
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
-  config.logger = Logger.new(config.log_path)
-  $m = Logger.new(File.join(RAILS_ROOT, "log/my.log"))
+  $m = ActiveSupport::BufferedLogger.new(File.join(RAILS_ROOT, "log/my.log"))
 
   # Your secret key for verifying cookie session data integrity.
   # If you change this key, all old sessions will become invalid!
@@ -59,3 +58,5 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
 end
+
+require 'gettext/rails'
