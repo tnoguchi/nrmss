@@ -18,10 +18,10 @@
   <%=h @item.name %>
 </p>
 
-<p>
+<!--p>
   <b>Description:</b>
   <%=h @item.description %>
-</p>
+</p-->
 
 <p>
   <b>Price:</b>
@@ -34,6 +34,17 @@
 </p>
 
 <p>
+  <b>Groups:</b>
+  <%=h @item.groups.size %>
+</p>
+
+<ul>
+<%- @item.groups.each do |group| -%>
+<li><%= render :partial => "related_items", :locals => { :item => @item, :group => group } %></li>
+<%- end -%>
+</ul>
+
+<!--p>
   <b>Created at:</b>
   <%=h @item.created_at %>
 </p>
@@ -41,7 +52,7 @@
 <p>
   <b>Updated at:</b>
   <%=h @item.updated_at %>
-</p>
+</p-->
 
 
 <%= link_to 'Edit', edit_item_path(@item) %> |

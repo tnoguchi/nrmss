@@ -18,6 +18,10 @@ module Rakuten::Url
       str.split(boundary).compact.map { |url| item_info(url) }
     end
 
+    def resize_thumbnail_url(url, size = @@SIZE_OF_THUMBNAIL)
+      url.sub(/(_ex=)\d+x\d+/, '\\1' + Array.new(2, size) * "x")
+    end
+
     def item_info(options)
       url = case options
             when String
@@ -30,14 +34,17 @@ module Rakuten::Url
       # 不正な文字列・から文字列
       return {:url => url} if url.blank? or url !~ %r(^http|https://)
       # 
-      return item if item = Item.find_by_url(url)
+      if (item = Item.find_by_url(url))
+        return item
+      end
 
-      doc = Hpricot(open(url))
+      doc = Hpricot(NKF.nkf("-m0 -Ew", open(url).read))
       res = {
-        :name => NKF.nkf("-m0 -Ew", (doc/".item_name/b").inner_html),
-        :price => NKF.nkf("-m0 -Ew", (doc/"span.price2").inner_html.to_s.gsub(/[^\d\.]+/, "")),
-        :image => NKF.nkf("-m0 -Ew", ((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img") || {}).first[:src].sub(/(_ex=)\d+x\d+/, '\\1' + Array.new(2, @@SIZE_OF_THUMBNAIL) * "x")),
-        :description => NKF.nkf("-m0 -Ew", ((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img") || {}).first[:src].sub(/(_ex=)\d+x\d+/, '\\1' + Array.new(2, @@SIZE_OF_THUMBNAIL) * "x")),
+        :name => (doc/".item_name/b").inner_html,
+        :price => (doc/"span.price2").inner_html.to_s.gsub(/[^\d\.]+/, ""),
+        :image => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
+        :description => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
+        :url => url,
       }
       item = Item.new(res)
       item.save!

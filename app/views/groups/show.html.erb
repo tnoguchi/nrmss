@@ -20,7 +20,7 @@
 
 <ul>
 <%- @group.items.each do |item| -%>
-  <li><%= link_to "#{h item.name}(#{h item.price} yen)", item_url(item) %></li>
+<li><%= render :partial => "items/related_items", :locals => { :item => item, :group => @group } %></li>
 <%- end -%>
 </ul>
 

@@ -1,0 +1,21 @@
+<%- return unless item || items -%>
+<!-- 関連商品 -->
+<div class="related_items">
+<h2><%= h item.name %>の関連商品</h2>
+<%- (others = items.dup).delete(item) -%>
+<%#- others.each_slice(Rakuten::Render.SIZE_IN_ROW) do |a| -%>
+<%- others.each_slice(4) do |a| -%>
+	<%- a.each do |other_item| -%>
+	<%- array = [ other_item.name, number_with_delimiter(other_item.price) + "円" ] -%>
+	<%=
+           content_tag(:div,
+           content_tag(:div, content_tag(:div, ""), :class => "related_item_head") +
+           content_tag(:div, content_tag(:div, content_tag(:img, "", :src => other_item.thumbnail_80, :alt => array * " ", :title => array * " ") + " " +
+                       content_tag(:a, array * "<br>", :href => other_item.url)),
+                       :class => "related_item_body") +
+           content_tag(:div, content_tag(:div, "<br>"), :class => "related_item_bottom"),
+                       :class => "related_item") %>
+	<%- end -%>
+	<br style="clear: both;" />
+<%- end -%>
+</div>

@@ -31,7 +31,7 @@ Rails::Initializer.run do |config|
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
-  $m = ActiveSupport::BufferedLogger.new(File.join(RAILS_ROOT, "log/my.log"))
+  $m = defined? ActiveSupport ? ActiveSupport::BufferedLogger.new(File.join(RAILS_ROOT, "log/my.log")) : Logger.new(File.join(RAILS_ROOT, "log/my.log"))
 
   # Your secret key for verifying cookie session data integrity.
   # If you change this key, all old sessions will become invalid!

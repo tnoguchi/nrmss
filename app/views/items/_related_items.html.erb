@@ -1,0 +1,11 @@
+<%= stylesheet_link_tag "related_items" %>
+<%= image_tag item.thumbnail_80 %>
+<%= link_to h(item.name), item_url(item) %>
+(<%=h number_with_delimiter(item.price)%> yen)
+<%= item.url ? link_to(_("Confirm this item at Rakuten"), item.url.to_s) : "URL not defined" %>
+<%- partial_html = render :partial => "lib/rms/default", :locals => { :item => item, :items => group.items } -%>
+	<ul><li style="width: 440px; border: 0; margin: 0; padding: 0">
+	<%= partial_html %>
+	</li><li>
+		<form><%= text_area_tag nil, h(partial_html), :size => "100x20", :style => "width: 100%; font-size: 10pt;", :onclick => "this.select();" %></textarea></form>
+	</li></ul>
