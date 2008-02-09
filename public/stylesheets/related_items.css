@@ -1,0 +1,57 @@
+a {
+	color: #797979;
+	background: #ffffff;
+}
+a:hover {
+	color: #a40031;
+	background: #ffffff;
+}
+a:visited {
+	color: #620015;
+	background: #ffffff;
+}
+.related_items {
+	margin: 1.5em 0 0;
+	padding: 0.5em 0.5em;
+	border: 1px dotted #a40a3c;
+}
+.related_items h2 {
+	margin: 0.1em;
+	color: #a40a3c;
+}
+
+.related_item {
+	width: 100px;
+	float: left;
+}
+.related_item_head, .related_item_head div, .related_item_bottom, .related_item_bottom div {
+	font-size: 1px;
+	height: 16px;
+}
+.related_item_head {
+	background: url(http://nrmss.googlecode.com/files/curve-right-head.gif) top right no-repeat;
+	margin-top: 5px;
+}
+.related_item_head div {
+	background: url(http://nrmss.googlecode.com/files/curve-left-head.gif) top left no-repeat;
+}
+
+.related_item_body {
+	background: url(http://nrmss.googlecode.com/files/curve-left-middle.gif) top left repeat-y;
+	padding: 0 0 0 10px;
+}
+
+.related_item_body div {
+	background: url(http://nrmss.googlecode.com/files/curve-right-middle.gif) top right repeat-y;
+	padding: 0 10px 0 0;
+	font-size: 80%;
+}
+
+.related_item_bottom {
+	background: url(http://nrmss.googlecode.com/files/curve-right-bottom.gif) bottom right no-repeat;
+	margin-bottom: 5px;
+}
+
+.related_item_bottom div {
+	background: url(http://nrmss.googlecode.com/files/curve-left-bottom.gif) bottom left no-repeat;
+}

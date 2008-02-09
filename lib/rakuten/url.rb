@@ -33,20 +33,19 @@ module Rakuten::Url
 
       # 不正な文字列・から文字列
       return {:url => url} if url.blank? or url !~ %r(^http|https://)
-      # 
-      if (item = Item.find_by_url(url))
-        return item
-      end
+
+      item = Item.find_by_url(url) || Item.new
 
       doc = Hpricot(NKF.nkf("-m0 -Ew", open(url).read))
-      res = {
+      result = {
         :name => (doc/".item_name/b").inner_html,
         :price => (doc/"span.price2").inner_html.to_s.gsub(/[^\d\.]+/, ""),
         :image => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
         :description => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
         :url => url,
+        :amount => (doc/".soldout_msg") ? 0 :(doc/".rest").inner_html.to_s.gsub(/[^\d\.]+/, "")
       }
-      item = Item.new(res)
+      item.attributes = result
       item.save!
       item
     end

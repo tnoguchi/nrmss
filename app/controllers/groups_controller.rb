@@ -44,11 +44,11 @@ class GroupsController < ApplicationController
 
     @successful = true
     flash[:notice] = ""
-    #begin
+    begin
       items = Rakuten::Url.raw_string_to_items(params[:urls].to_s).compact
-    #rescue
-    #  flash[:notice] += "error"
-    #end
+    rescue
+      flash[:notice] += "error"
+    end
 
     @successful &&= @group.save
     @successful && items.each do |item|

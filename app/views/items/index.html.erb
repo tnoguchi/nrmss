@@ -1,13 +1,23 @@
 <h1>Listing items</h1>
 
+<div class="search_box">
+  <%- form_tag(items_url, :method => 'get') do %>
+  <%= text_field_tag :q, h(params[:q]) %>
+  <%= submit_tag "Search", :name => nil %>
+  <%- end -%>
+</div>
+<%= content_tag :div, "#{@items.size} items found" %>
+
 <table>
   <tr>
+<!--
     <th>Url</th>
     <th>User description</th>
     <th>Rms type</th>
+-->
     <th>Name</th>
     <th>Description</th>
-    <th>Price</th>
+    <th>Price / 円</th>
     <th>Amount</th>
     <!--th>Created at</th>
     <th>Updated at</th-->
@@ -15,18 +25,26 @@
 
 <% for item in @items %>
   <tr>
-    <td><%=h item.url %></td>
+<!--
+    <td><%#= link_to_function '○', "$('item_show_#{item.id}').toggle()" %>
+<%#= link_to 'Rakuten Link', item.url, :id => "item_show_#{item.id}", :style => "display: none;", :target => '_blank' %></td>
     <td><%=h item.user_description %></td>
     <td><%=h item.rms_type %></td>
-    <td><%=h item.name %></td>
-    <td><%=h item.description %></td>
-    <td><%=h item.price %></td>
+-->
+<%#=h  item.inspect %> <%#- next -%>
+    <td><%= image_tag "ext/rakuten_ichiba_logo.gif", :height => 16 %> <%= link_to h(item.name), item.url.to_s, :target => '_blank' %></td>
+    <td><%= image_tag item.description, :height => 30 if item.description%></td>
+    <td><%= format_price(item.price) %></td>
     <td><%=h item.amount %></td>
     <!--td><%=h item.created_at %></td>
     <td><%=h item.updated_at %></td-->
     <td><%= link_to 'Show', item %></td>
     <td><%= link_to 'Edit', edit_item_path(item) %></td>
     <td><%= link_to 'Destroy', item, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+  <tr>
+    <td><%=h item.user_description %></td>
+    <td><%=h item.rms_type %></td>
   </tr>
 <% end %>
 </table>

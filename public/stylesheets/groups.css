@@ -1,0 +1,11 @@
+.group {
+	margin: auto 2em;
+}
+.group .items {
+	font-size: 85%;
+	background-color: #fec6c5;
+	border: solid thin #80273f;
+	margin: auto 1em;
+	padding: 1em;
+}
+

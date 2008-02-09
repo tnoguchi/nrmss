@@ -2,7 +2,13 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.xml
   def index
-    @items = Item.find(:all)
+    cond, inc_tables = for_group_id
+    unless params[:q].blank?
+      cond = [ 'name LIKE ?', "%#{params[:q].strip}%" ]
+      inc_tables = nil
+    end
+ 
+    @items = Item.find(:all, :include => inc_tables, :conditions => cond)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -81,5 +87,21 @@ class ItemsController < ApplicationController
       format.html { redirect_to(items_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def update_rakuten_item_info
+    @item = Item.find(params[:id])
+
+    Rakuten::Url.item_info(@item.url)
+  end
+
+  private
+  def for_group_id
+    cond, inc_tables = nil, nil
+    unless params[:group_id].blank?
+      cond = [ "assigns.group_id = ?", params[:group_id] ]
+      inc_tables = [ :assigns ]
+    end
+    [ cond, inc_tables ]
   end
 end
