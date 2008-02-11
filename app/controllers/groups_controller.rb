@@ -44,17 +44,9 @@ class GroupsController < ApplicationController
 
     @successful = true
     flash[:notice] = ""
-    begin
-      items = Rakuten::Url.raw_string_to_items(params[:urls].to_s).compact
-    rescue
-      flash[:notice] += "error"
-    end
-
     @successful &&= @group.save
-    @successful && items.each do |item|
-      $m.debug item
-      Assign.new(:group_id => @group.id, :item_id => item.id).save! if item.is_a?(Item)
-    end
+    # save items specified in 'urls' parameters
+    @successful &&= urls_to_items_and_assigns(params[:urls].to_s)
 
     respond_to do |format|
       if @successful
@@ -73,9 +65,19 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
 
+    @successful = true
+    flash[:notice] = ""
+    @successful &&= @group.update_attributes(params[:group])
+    @group.items.each { |item| Rakuten::Url.update_item_info(item) }
+    # save items specified in 'urls' parameters
+    @successful &&= urls_to_items_and_assigns(params[:urls].to_s)
+
+    flash[:notice] = 'Group was successfully updated.'
+
     respond_to do |format|
-      if @group.update_attributes(params[:group])
+      if @successful
         flash[:notice] = 'Group was successfully updated.'
+        flash[:notice] += 'delete:' + params[:items_delete].inspect
         format.html { redirect_to(@group) }
         format.xml  { head :ok }
       else
@@ -96,4 +98,19 @@ class GroupsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+  def urls_to_items_and_assigns str
+    begin
+      items = Rakuten::Url.raw_string_to_items(str).compact
+    rescue
+      flash[:notice] += "error"
+    end
+
+    items.each do |item|
+      Assign.new(:group_id => @group.id, :item_id => item.id).save! if item.is_a?(Item)
+    end
+    @successful
+  end
+
 end

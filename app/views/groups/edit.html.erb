@@ -18,7 +18,7 @@
     <%= f.text_field :preference %>
   </p>
 
-  <p>
+  <!--p>
     <b>Created at</b><br />
     <%= f.datetime_select :created_at %>
   </p>
@@ -26,6 +26,24 @@
   <p>
     <b>Updated at</b><br />
     <%= f.datetime_select :updated_at %>
+  </p-->
+
+  <p>
+    <b>Items in this group</b><br />
+  </p>
+  <%- if @group.items.any? -%>
+  <ul>
+    <%- @group.items.each do |item| -%>
+    <li><%= link_to h(item.name), item_path(item), :target => '_blank' %> (<%= check_box_tag "items_delete[]", item.id %> Delete the item from this group)</li>
+    <%- end -%>
+  </ul>
+  <%- else -%>
+  <ul><li>No item registered yet!</li></ul>
+  <%- end -%>
+
+  <p>
+    <b>Additional item urls</b><br />
+    <%= text_area_tag :urls, '', :size => "100x10" %>
   </p>
 
   <p>

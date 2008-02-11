@@ -31,19 +31,23 @@ module Rakuten::Url
             end
       url.strip!
 
-      # 不正な文字列・から文字列
+      # 不正な文字列・空文字列
       return {:url => url} if url.blank? or url !~ %r(^http|https://)
 
-      item = Item.find_by_url(url) || Item.new
+      item = Item.find_by_url(url) || Item.new(:url => url)
 
-      doc = Hpricot(NKF.nkf("-m0 -Ew", open(url).read))
+      update_item_info(item)
+    end
+
+    # TODO: Item modelに依存してるので、非依存にする
+    def update_item_info(item)
+      doc = Hpricot(NKF.nkf("-m0 -Ew", open(item.url).read))
       result = {
-        :name => (doc/".item_name/b").inner_html,
+        :name => (doc/".item_name/b").inner_html.gsub(/<br.*?>/, " "),
         :price => (doc/"span.price2").inner_html.to_s.gsub(/[^\d\.]+/, ""),
         :image => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
         :description => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
-        :url => url,
-        :amount => (doc/".soldout_msg") ? 0 :(doc/".rest").inner_html.to_s.gsub(/[^\d\.]+/, "")
+        :amount => (doc.search ".soldout_msg").any? ? 0 : (doc/".rest").inner_html.to_s.gsub(/[^\d\.]+/, "").to_i
       }
       item.attributes = result
       item.save!
