@@ -1,3 +1,4 @@
+<%- if params[:authenticity_token].blank? -%>
 <h1>Listing items</h1>
 
 <div class="search_box">
@@ -6,6 +7,7 @@
   <%= submit_tag "Search", :name => nil %>
   <%- end -%>
 </div>
+<%- end -%>
 <%= content_tag :div, "#{@items.size} items found" %>
 
 <table>

@@ -1,5 +1,9 @@
 <h1>Listing groups</h1>
 
+<%= link_to 'New group', new_group_path %>
+
+<br />
+
 <table width="100%">
   <tr>
     <th colspan="0">Name</th>
@@ -31,12 +35,8 @@
   </tr>
   <tr>
     <td colspan="0"><div class="group">
-      <%= link_to_function 'Hide items', "Effect.SlideUp($('items_#{group.id}'))", :id => "items_hide_#{group.id}", :style => "display: none" %><%= content_tag :div, (link_to_remote 'Items in this group', :update => "items_#{group.id}", :url => group_items_path(group), :method => 'get', :success => "$('items_hide_#{group.id}').show()"), :id => "items_#{group.id}", :class => "items" %>
+      <%= link_to_function 'Hide items', "Effect.SlideUp($('items_#{group.id}'))", :id => "items_hide_#{group.id}", :style => "display: none" %><%= content_tag :div, (link_to_remote "#{group.items.size.to_s} items in this group", :update => "items_#{group.id}", :url => group_items_path(group), :method => 'get', :success => "$('items_hide_#{group.id}').show()"), :id => "items_#{group.id}", :class => "items" %>
     </div></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New group', new_group_path %>
