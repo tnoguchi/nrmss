@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :items
 
-  map.resources :groups
+  map.resources :groups, :has_many => :items
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -22,7 +22,6 @@ ActionController::Routing::Routes.draw do |map|
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
 
-  map.resources :groups, :has_many => :items
 
   # Sample resource route within a namespace:
   #   map.namespace :admin do |admin|
@@ -36,6 +35,6 @@ ActionController::Routing::Routes.draw do |map|
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  map.connect ':controller/:id/:action'
+  map.connect ':controller/:id.:format/:action'
 end

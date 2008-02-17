@@ -33,7 +33,6 @@
     <td><%=h item.user_description %></td>
     <td><%=h item.rms_type %></td>
 -->
-<%#=h  item.inspect %> <%#- next -%>
     <td><%= image_tag "ext/rakuten_ichiba_logo.gif", :height => 16 %> <%= link_to h(item.name), item.url.to_s, :target => '_blank' %></td>
     <td><%= image_tag item.description, :height => 30 if item.description%></td>
     <td><%= format_price(item.price) %></td>

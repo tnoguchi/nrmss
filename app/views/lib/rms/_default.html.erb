@@ -3,6 +3,7 @@
 <div class="related_items">
 <h2><%= h item.name %>の関連商品</h2>
 <%- (others = items.dup).delete(item) -%>
+<%- stockout = %Q|<br><span class="stockout" style="color: red">在庫切れ</span>| -%>
 <%#- others.each_slice(Rakuten::Render.SIZE_IN_ROW) do |a| -%>
 <%- others.each_slice(4) do |a| -%>
 	<%- a.each do |other_item| -%>
@@ -10,12 +11,12 @@
 	<%=
            content_tag(:div,
            content_tag(:div, content_tag(:div, ""), :class => "related_item_head") +
-           content_tag(:div, content_tag(:div, content_tag(:img, "", :src => other_item.thumbnail_80, :alt => array * " ", :title => array * " ") + " " +
-                       content_tag(:a, array * "<br>", :href => other_item.url)),
+           content_tag(:div, content_tag(:div, image_tag(other_item.thumbnail_80, :alt => array * " ", :title => array * " ") +
+                       link_to(array.first, other_item.url) + "<br>" + array.last + (other_item.amount == 0 ? stockout : "")),
                        :class => "related_item_body") +
            content_tag(:div, content_tag(:div, "<br>"), :class => "related_item_bottom"),
                        :class => "related_item") %>
 	<%- end -%>
-	<br style="clear: both;" />
+	<div style="clear: both; height: 0"></div>
 <%- end -%>
 </div>

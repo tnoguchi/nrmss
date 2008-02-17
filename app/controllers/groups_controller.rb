@@ -72,12 +72,15 @@ class GroupsController < ApplicationController
     # save items specified in 'urls' parameters
     @successful &&= urls_to_items_and_assigns(params[:urls].to_s)
 
-    flash[:notice] = 'Group was successfully updated.'
+    params[:items_delete].to_a.map do |item_id|
+      if assign = Assign.find(:first, :conditions => [ 'group_id = ? AND item_id = ?', @group.id, item_id.to_i ])
+        assign.destroy && (flash[:notice] += "'#{assign.item.name}' was deleted.<br>\n")
+      end
+    end
 
     respond_to do |format|
       if @successful
-        flash[:notice] = 'Group was successfully updated.'
-        flash[:notice] += 'delete:' + params[:items_delete].inspect
+        flash[:notice] += 'Group was successfully updated.'
         format.html { redirect_to(@group) }
         format.xml  { head :ok }
       else

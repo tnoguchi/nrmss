@@ -59,4 +59,7 @@ Rails::Initializer.run do |config|
   config.active_record.default_timezone = :utc
 end
 
-require 'gettext/rails'
+#require 'gettext/rails' rescue nil
+ActionView::Base.class_eval do
+  defined?(_) || def _(*arg); arg; end
+end
