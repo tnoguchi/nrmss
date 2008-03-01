@@ -4,8 +4,20 @@
 (<%=h number_with_delimiter(item.price)%> yen)
 <%= item.url ? link_to(_("Confirm this item at Rakuten"), item.url.to_s) : "URL not defined" %>
 <%- partial_html = render :partial => "lib/rms/default", :locals => { :item => item, :items => group.items } -%>
-	<ul><li style="width: 440px; border: 0; margin: 0; padding: 0">
-	<%= partial_html %>
-	</li><li>
-		<form><%= text_area_tag nil, h(partial_html), :size => "100x20", :style => "width: 100%; font-size: 10pt;", :onclick => "this.select();" %></textarea></form>
-	</li></ul>
+	<ul>
+<%- iframe_url = item.url.sub(%r{//item.rakuten.co.jp/([\w-]+)/([\w-]+)/}, "//www.rakuten.ne.jp/gold/\\1/related_items/\\1_\\2.html")
+iframe_string = %Q|<!-- 関連商品 -->
+<iframe frameborder="0" target="_top" marginheight="0" marginwidth="0" src="#{iframe_url}">
+<a href="#{iframe_url}" target="_blank">関連商品はこちら</a>
+</iframe>|
+-%>
+		<li>
+			<form><%= text_area_tag nil, h(iframe_string), :size => "100x5", :style => "width: 100%; font-size: 10pt;", :onclick => "this.select();" %></textarea></form>
+		</li>
+		<li style="width: 440px; border: 0; margin: 0; padding: 0">
+			<%= partial_html %>
+		</li>
+		<li style="display: none"><!-- temporary -->
+			<form><%= text_area_tag nil, h(partial_html), :size => "100x20", :style => "width: 100%; font-size: 10pt;", :onclick => "this.select();" %></textarea></form>
+		</li>
+	</ul>

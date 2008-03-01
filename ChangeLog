@@ -1,3 +1,7 @@
+2008-03-01    <noguchi@IMPORT>
+
+	* lib/iframe_generator.rb (IframeGenerator::initialize):
+	Add new library.
 
 > svn co https://nrmss.googlecode.com/svn/trunk/ nrmss --username n071316
 > cd ..
