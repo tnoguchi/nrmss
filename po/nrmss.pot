@@ -1,0 +1,113 @@
+# New RMS Supporter
+# Copyright (C) 2008 nrmss project
+# This file is distributed under the same license as the PACKAGE package.
+# NOGUCHI, Takuya <n071316@gmail.com>, 2008.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nrmss 0.0.1\n"
+"POT-Creation-Date: 2008-03-08 13:56+0900\n"
+"PO-Revision-Date: 2008-03-08 13:56+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: app/models/assign.rb:-
+msgid "assign"
+msgstr ""
+
+#: app/models/assign.rb:-
+msgid "Assign|Group"
+msgstr ""
+
+#: app/models/assign.rb:-
+msgid "Assign|Item"
+msgstr ""
+
+#: app/models/assign.rb:-
+msgid "Assign|Created at"
+msgstr ""
+
+#: app/models/assign.rb:-
+msgid "Assign|Updated at"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "group"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Name"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Description"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Preference"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Created at"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Updated at"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "item"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "Item|Url"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "Item|User description"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "Item|Rms type"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "Item|Name"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "Item|Description"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "Item|Price"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "Item|Amount"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "Item|Created at"
+msgstr ""
+
+#: app/models/item.rb:-
+msgid "Item|Updated at"
+msgstr ""
+
+#: app/views/groups/index.html.erb:1
+msgid "Listing groups"
+msgstr ""
+
+#: app/views/groups/index.html.erb:9
+msgid "Name"
+msgstr ""
+
+#: app/views/items/_related_items.html.erb:5
+msgid "Confirm this item at Rakuten"
+msgstr ""

@@ -1,3 +1,22 @@
+2008-03-08  NOGUCHI, Takuya  <n071316@gmail.com>
+
+	* config/environment.rb: 
+	* public/stylesheets/related_items.css: Change design.
+	* public/stylesheets/groups.css: Change design.
+	* public/index.html: Change top for nrmss.
+	* lib/iframe_generator.rb (IframeGenerator::generate_all): Fix css url.
+	* app/views/groups/index.html.erb: Get support GetText some degree.
+	* app/views/groups/show.html.erb: Change design a little.
+	* app/views/items/_related_items.html.erb: Change design.
+	* app/views/welcome/index.html.erb: Add.
+	* app/controllers/application.rb (ApplicationController): fix GetText.
+	* app/helpers/welcome_helper.rb: Add.
+	* test/functional/welcome_controller_test.rb (WelcomeControllerTest): Add.
+	* app/controllers/welcome_controller.rb (WelcomeController::index): Add.
+	* locale/ja/LC_MESSAGES/nrmss.mo: make mo.
+	* po/nrmss.pot: generate pot.
+	* po/ja/nrmss.po: translate po (Japanese only).
+
 2008-03-01    <n071316@gmail.com>
 
 	* lib/iframe_generator.rb (IframeGenerator::initialize):

@@ -1,3 +1,6 @@
+a img {
+	border: none;
+}
 .group {
 	margin: auto 2em;
 }
@@ -9,3 +12,18 @@
 	padding: 1em;
 }
 
+.group div.item_image {
+	float: left;
+}
+ul.item_description {
+	display: inline;
+}
+ul.item_description li {
+	display: block;
+	margin-left: 1em;
+}
+
+form.for_copy_paste textarea {
+	font-size: 8pt;
+	width: 100%;
+}

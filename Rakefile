@@ -14,7 +14,7 @@ task :updatepo do
   require 'gettext/utils'
   GetText.update_pofiles("nrmss",
                          Dir.glob("{app,config,components,lib}/**/*.{rb,rhtml,html.erb}"),
-                         "rrmss 0.0.1"
+                         "nrmss 0.0.1"
                          )
 end
 

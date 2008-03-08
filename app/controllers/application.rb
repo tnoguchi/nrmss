@@ -9,5 +9,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => 'f95fe5fc23b73e6490d69f3dda9f9b9a'
 
   # gettext
-  #init_gettext "nrmss"
+  GetText.locale = "ja"
+  init_gettext "nrmss"
 end

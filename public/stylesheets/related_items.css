@@ -13,9 +13,10 @@ a:visited {
 .related_items {
 	margin: 1.5em 0 0;
 	padding: 0.5em 0.5em;
-	border: 1px dotted #a40a3c;
+	/*border: 1px dotted #a40a3c;*/
 }
 .related_items h2 {
+	font-size: 16pt;
 	margin: 0.1em;
 	color: #a40a3c;
 }

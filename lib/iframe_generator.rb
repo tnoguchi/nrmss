@@ -42,7 +42,7 @@ class IframeGenerator
             f.puts <<-EOS
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
 
-<link href="#{item.url.sub(%r{//item.rakuten.co.jp/([\w-]+)/(\w+)/}, "//www.rakuten.ne.jp/gold/\\1/")}/css/related_items.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="#{item.url.sub(%r{//item.rakuten.co.jp/([\w-]+)/(\w+)/}, "//www.rakuten.ne.jp/gold/\\1/")}css/related_items.css" media="screen" rel="stylesheet" type="text/css" />
 
 </head><body>
             EOS

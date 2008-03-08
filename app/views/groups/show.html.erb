@@ -21,11 +21,11 @@
   <%=h @group.items.size %>
 </p>
 
-<ul>
+<ol class="group">
 <%- @group.items.each do |item| -%>
 <li><%= render :partial => "items/related_items", :locals => { :item => item, :group => @group } %></li>
 <%- end -%>
-</ul>
+</ol>
 
 <!--p>
   <b>Created at:</b>
