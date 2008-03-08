@@ -1,3 +1,6 @@
+h1 {
+	line-height: 1.3;
+}
 a img {
 	border: none;
 }
@@ -8,7 +11,7 @@ a img {
 	font-size: 85%;
 	background-color: #fec6c5;
 	border: solid thin #80273f;
-	margin: auto 1em;
+	margin: auto 2em;
 	padding: 1em;
 }
 
