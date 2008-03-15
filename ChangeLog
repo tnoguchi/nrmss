@@ -1,3 +1,15 @@
+2008-03-15  NOGUCHI, Takuya  <n071316@gmail.com>
+
+	* lib/rakuten/url.rb (Rakuten::update_item_info): Refactor code.
+	(Rakuten::parse_html_to_hash): Split out parsing.
+
+	* lib/tasks/item.rake: Add new tasks to update item info and iframe htmls.
+
+	* app/controllers/groups_controller.rb (GroupsController::urls_to_items_and_assigns): Refactor code.
+	(GroupsController::update): Support rename of the method.
+
+	* app/models/item.rb (Item::update_info_from_rakuten): Move from Rakuten::Url library.
+
 2008-03-08  NOGUCHI, Takuya  <n071316@gmail.com>
 
 	* config/environment.rb: 

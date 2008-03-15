@@ -9,7 +9,7 @@ module Rakuten::Url
 
   # 一行に表示する件数
   @@SIZE_IN_ROW = 4
-  #
+  # サムネイル画像の横幅 (単位: px)
   @@SIZE_OF_THUMBNAIL = 80
 
 
@@ -22,6 +22,7 @@ module Rakuten::Url
       url.sub(/(_ex=)\d+x\d+/, '\\1' + Array.new(2, size) * "x")
     end
 
+    # URL文字列からitem生成、そして、情報更新
     def item_info(options)
       url = case options
             when String
@@ -36,12 +37,18 @@ module Rakuten::Url
 
       item = Item.find_by_url(url) || Item.new(:url => url)
 
-      update_item_info(item)
+      item.update_info_from_rakuten
     end
 
-    # TODO: Item modelに依存してるので、非依存にする
+    # TODO: DEPRECATED
     def update_item_info(item)
-      doc = Hpricot(NKF.nkf("-m0 -Ew", open(item.url).read))
+      logger.warn("Rakuten::Url.update_item_info was deprecated!")
+      item.update_info_from_rakuten
+    end
+
+    # Hpricot を使ったパーサ
+    def parse_html_to_hash(url)
+      doc = Hpricot(NKF.nkf("-m0 -Ew", open(url).read))
       result = {
         :name => (doc/".item_name/b").inner_html.gsub(/<br.*?>/, " "),
         :price => (doc/"span.price2").inner_html.to_s.gsub(/[^\d\.]+/, ""),
@@ -49,10 +56,8 @@ module Rakuten::Url
         :description => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
         :amount => (doc.search ".soldout_msg").any? ? 0 : (doc/".rest").inner_html.to_s.gsub(/[^\d\.]+/, "").to_i
       }
-      item.attributes = result
-      item.save!
-      item
     end
+
   end
 
 end

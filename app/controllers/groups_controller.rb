@@ -68,7 +68,7 @@ class GroupsController < ApplicationController
     @successful = true
     flash[:notice] = ""
     @successful &&= @group.update_attributes(params[:group])
-    @group.items.each { |item| Rakuten::Url.update_item_info(item) }
+    @group.items.each { |item| item.update_info_from_rakuten }
     # save items specified in 'urls' parameters
     @successful &&= urls_to_items_and_assigns(params[:urls].to_s)
 
@@ -103,7 +103,8 @@ class GroupsController < ApplicationController
   end
 
   private
-  def urls_to_items_and_assigns str
+  # 改行で区切られたURLを含む文字列からItemインスタンスの配列を生成などする
+  def urls_to_items_and_assigns(str)
     begin
       items = Rakuten::Url.raw_string_to_items(str).compact
     rescue
