@@ -105,9 +105,12 @@ class GroupsController < ApplicationController
   private
   # 改行で区切られたURLを含む文字列からItemインスタンスの配列を生成などする
   def urls_to_items_and_assigns(str)
+    @successful = true
     begin
       items = Rakuten::Url.raw_string_to_items(str).compact
     rescue
+      #items = []
+      @@successful = false
       flash[:notice] += "error"
     end
 
