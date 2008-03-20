@@ -15,8 +15,7 @@ class Item < ActiveRecord::Base
   # Update item info from public pages in Rakuten
   def update_info_from_rakuten
     result = Rakuten::Url.parse_html_to_hash(self.url)
-    self.attributes = result
-    self.save!
+    self.update_attributes!(result.reject { |k,v| !self.class.column_names.include?(k.to_s) })
     self
   end
 end
