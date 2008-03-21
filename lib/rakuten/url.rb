@@ -59,7 +59,7 @@ module Rakuten::Url
         :category_names => (doc/".sdtext a").map { |e| e.inner_html }.uniq.delete("カテゴリトップ")
       }
       # FIXME: tentative process
-      result[:description] += result[:category_names]
+      result[:description] += result[:category_names] unless result[:category_names].blank?
       result
     end
 
