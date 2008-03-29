@@ -59,6 +59,14 @@ Rails::Initializer.run do |config|
   config.active_record.default_timezone = :utc
 end
 
+# Load rms authentication yaml
+rms_file = File.open(File.join(RAILS_ROOT, 'config', 'rms.yml'))
+if File.exist?(rms_file)
+  rms_config = YAML::load(rms_file)
+else
+  # no rms config!!!
+end
+
 # Ruby-GetText-Package Rail plugin
 require 'gettext/rails' rescue nil
 

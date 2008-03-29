@@ -49,7 +49,13 @@ module Rakuten::Url
     # Hpricot を使ったパーサ
     # TODO: Rakuten::Parseに移動
     def parse_html_to_hash(url)
-      doc = Hpricot(NKF.nkf("-m0 -Ew", open(url).read))
+      html_source = case url
+                    when %r{\A/http://souko.rms.rakuten.co.jp/}
+                      Rakuten::RmsLogin.fetch(url)
+                    else # http://item.rakuten.co.jp/
+                      open(url).read
+                    end
+      doc = Hpricot(NKF.nkf("-m0 -Ew", html_source))
       result = {
         :name => (doc/".item_name/b").inner_html.to_s.gsub(/<br.*?>/, " "),
         :price => (doc/"span.price2").inner_html.to_s.gsub(/[^\d\.]+/, ""),

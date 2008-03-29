@@ -14,6 +14,7 @@ namespace :item do
       require File.join(RAILS_ROOT, 'config/boot.rb')
       require 'iframe_generator'
       IframeGenerator.generate_all
+      puts "all html files updated."
     end
   end
 end
