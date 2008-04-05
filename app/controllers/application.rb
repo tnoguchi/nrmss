@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery # :secret => 'f95fe5fc23b73e6490d69f3dda9f9b9a'
+  protect_from_forgery #:secret => 'f95fe5fc23b73e6490d69f3dda9f9b9a'
 
   # gettext
   GetText.locale = "ja"

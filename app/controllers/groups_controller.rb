@@ -108,13 +108,15 @@ class GroupsController < ApplicationController
     @successful = true
     begin
       items = Rakuten::Url.raw_string_to_items(str).compact
-    rescue
-      #items = []
+    rescue OpenSSL::SSL::SSLError
       @@successful = false
-      flash[:notice] += "error"
+      flash[:notice] += "ssl error:"
+    rescue
+      @@successful = false
+      flash[:notice] += "error" + $@.first.to_s + $!.to_s
     end
 
-    items.each do |item|
+    (items || []).each do |item|
       Assign.new(:group_id => @group.id, :item_id => item.id).save! if item.is_a?(Item)
     end
     @successful

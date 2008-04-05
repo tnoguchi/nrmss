@@ -33,7 +33,7 @@ module Rakuten::Url
       url.strip!
 
       # 不正な文字列・空文字列
-      return {:url => url} if url.blank? or url !~ %r(^http|https://)
+      return {:url => url} if url.blank? or url !~ %r(^https?://)
 
       item = Item.find_by_url(url) || Item.new(:url => url)
 
@@ -50,12 +50,15 @@ module Rakuten::Url
     # TODO: Rakuten::Parseに移動
     def parse_html_to_hash(url)
       html_source = case url
-                    when %r{\A/http://souko.rms.rakuten.co.jp/}
+                    when %r{\Ahttps://soko.rms.rakuten.co.jp/}
                       Rakuten::RmsLogin.fetch(url)
                     else # http://item.rakuten.co.jp/
                       open(url).read
                     end
       doc = Hpricot(NKF.nkf("-m0 -Ew", html_source))
+      # 削除した場合など
+      return {} if (doc/"title").inner_html.to_s =~ /【楽天市場】エラー/
+
       result = {
         :name => (doc/".item_name/b").inner_html.to_s.gsub(/<br.*?>/, " "),
         :price => (doc/"span.price2").inner_html.to_s.gsub(/[^\d\.]+/, ""),
@@ -65,7 +68,7 @@ module Rakuten::Url
         :category_names => (doc/".sdtext a").map { |e| e.inner_html }.uniq.delete("カテゴリトップ")
       }
       # FIXME: tentative process
-      result[:description] += result[:category_names] unless result[:category_names].blank?
+      result[:description] += ", " + result[:category_names] unless result[:category_names].blank?
       result
     end
 

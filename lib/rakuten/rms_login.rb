@@ -2,6 +2,9 @@ require 'mechanize'
 require 'nkf'
 
 module Rakuten::RmsLogin
+  @@config = {}
+  mattr_accessor :config
+
   @@login_top_url = 'https://glogin.rms.rakuten.co.jp/?sp_id=1'
   @@agent = WWW::Mechanize.new
   @@agent.user_agent_alias = 'Windows IE 7'
@@ -58,7 +61,14 @@ module Rakuten::RmsLogin
   #  url :: String
   #  return :: String
   def self.fetch(url)
-    login(1,1,1,1) unless @@logged_in
-    @@agent.get(url).body
+    login(@@config['r_login_id'],
+          @@config['r_password'],
+          @@config['user_id'],
+          @@config['user_r_login_id']) unless @@logged_in
+    if @@logged_in
+      @@agent.get(url).body
+    else
+      ""
+    end
   end
 end

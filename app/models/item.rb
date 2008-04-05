@@ -15,7 +15,11 @@ class Item < ActiveRecord::Base
   # Update item info from public pages in Rakuten
   def update_info_from_rakuten
     result = Rakuten::Url.parse_html_to_hash(self.url)
-    self.update_attributes!(result.reject { |k,v| !self.class.column_names.include?(k.to_s) })
+    if result == {}	# データ取得失敗 (削除されたなど)
+      self.update_attributes!(:rms_type => 999) unless self.new_record?
+    else	# データ取得成功
+      self.update_attributes!(result.reject { |k,v| !self.class.column_names.include?(k.to_s) })
+    end
     self
   end
 end

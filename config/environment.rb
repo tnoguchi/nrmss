@@ -60,11 +60,11 @@ Rails::Initializer.run do |config|
 end
 
 # Load rms authentication yaml
-rms_file = File.open(File.join(RAILS_ROOT, 'config', 'rms.yml'))
+rms_file = File.join(RAILS_ROOT, 'config', 'rms.yml')
 if File.exist?(rms_file)
-  rms_config = YAML::load(rms_file)
+  Rakuten::RmsLogin.config = YAML::load(File.open(rms_file).read)
 else
-  # no rms config!!!
+  raise FileNotFound, "#{rms_file} is not found."
 end
 
 # Ruby-GetText-Package Rail plugin
