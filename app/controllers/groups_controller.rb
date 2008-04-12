@@ -2,7 +2,13 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.xml
   def index
-    @groups = Group.find(:all, :order => 'preference ASC')
+    cond = nil
+    unless params[:q].blank?
+      cond = [ 'name LIKE ?', "%#{params[:q].strip}%" ]
+      # @groups = Group.fulltext_search(params[:q].strip)
+    end
+
+    @groups = Group.find(:all, :conditions => cond, :order => 'preference ASC')
 
     respond_to do |format|
       format.html # index.html.erb
