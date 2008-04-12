@@ -16,5 +16,14 @@ namespace :item do
       IframeGenerator.generate_all
       puts "all html files updated."
     end
+
+    desc "html backup"
+    task :backup => :environment do
+      desc "Backup html files for iframe (related items)"
+      require File.join(RAILS_ROOT, 'config/boot.rb')
+      require 'iframe_generator'
+      IframeGenerator.backup_base_dir
+    end
+
   end
 end

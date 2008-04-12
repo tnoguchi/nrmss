@@ -5,7 +5,9 @@ class CreateItems < ActiveRecord::Migration
       t.string :user_description
       t.integer :rms_type
       t.string :name
+      t.string :image_url
       t.text :description
+      t.string :category_names
       t.integer :price
       t.integer :amount
       t.timestamp :created_at

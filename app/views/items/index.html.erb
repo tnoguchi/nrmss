@@ -17,16 +17,16 @@
     <th>User description</th>
     <th>Rms type</th>
 -->
-    <th>Name</th>
-    <th>Description</th>
-    <th>Price / 円</th>
-    <th>Amount</th>
+    <th><%= _('Name') %></th>
+    <th><%= _('Description') %></th>
+    <th><%= _('Price') + ' / 円' %></th>
+    <th><%= _('Amount') %></th>
     <!--th>Created at</th>
     <th>Updated at</th-->
   </tr>
 
-<% for item in @items %>
-  <tr>
+<% @items.each_with_index do |item, i| %>
+  <tr class="record <%= 'even-record' if i % 2 == 0 %>">
 <!--
     <td><%#= link_to_function '○', "$('item_show_#{item.id}').toggle()" %>
 <%#= link_to 'Rakuten Link', item.url, :id => "item_show_#{item.id}", :style => "display: none;", :target => '_blank' %></td>
@@ -35,8 +35,8 @@
 -->
     <td><%= image_tag "ext/rakuten_ichiba_logo.gif", :height => 16 %> <%= link_to h(item.name), item.url.to_s, :target => '_blank' %></td>
     <td><%= image_tag item.description, :height => 30 if item.description%></td>
-    <td><%= format_price(item.price) %></td>
-    <td><%=h item.amount %></td>
+    <td class="price"><%= format_price(item.price) %></td>
+    <td class="amount"><%=h item.amount %></td>
     <!--td><%=h item.created_at %></td>
     <td><%=h item.updated_at %></td-->
     <td><%= link_to 'Show', item %></td>

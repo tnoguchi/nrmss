@@ -8,6 +8,9 @@ class IframeGenerator
   include ActionView::Helpers::AssetTagHelper	# image_tag
   include ActionView::Helpers::UrlHelper	# link_to
 
+  @@base_path = File.join(RAILS_ROOT, "/tmp/related_items/")
+  cattr_reader :base_path
+
   def initialize erb_file = RAILS_ROOT + "/app/views/lib/rms/_default.html.erb"
     if File.exist? erb_file
       @_e = ERB.new open(erb_file).read, nil, '-' 
@@ -30,15 +33,15 @@ class IframeGenerator
   class << self
     def generate_all
       # ディレクトリ
-      @base_path = File.join(RAILS_ROOT, "/tmp/related_items/")
-      FileUtils.mkdir_p @base_path
+      FileUtils.mkdir_p(self.base_path)
+
       # ジェネレータ
       ig = IframeGenerator.new
       Item.find(:all).each do |item|
         item_identifier = item.url.sub(/\A.*?rakuten\...\.jp\/?/, '').sub(/\/\Z/, '').gsub('/', '_')
         item.groups.each do |group|
           suffix = (!group.is_a? Array || group.size == 1) ? '' : "_#{group.id}"
-          open(File.join(@base_path, "#{item_identifier}#{suffix}.html"), "w") do |f|
+          open(File.join(self.base_path, "#{item_identifier}#{suffix}.html"), "w") do |f|
             f.puts <<-EOS
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
 
@@ -53,6 +56,19 @@ class IframeGenerator
           end
         end
       end
+    end
+ 
+    def backup_base_dir
+      base_dir = IframeGenerator.base_path
+      if File.exist?(base_dir)
+        target_dir = base_dir.sub(/#{File::SEPARATOR}\Z/, '') + File.mtime(base_dir).strftime('_%Y%m%d_%H%M%S')
+        puts "#{base_dir.sub(/\A#{RAILS_ROOT}/, '')} -> #{target_dir.sub(/\A#{RAILS_ROOT}/, '')}"
+        File.rename(base_dir, target_dir)
+        puts "html file backup was made."
+      else
+        puts "#{base_dir.sub(/\A#{RAILS_ROOT}/, '')} is not found. No need to backup yet."
+      end
+
     end
   end
 end

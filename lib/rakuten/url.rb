@@ -62,13 +62,11 @@ module Rakuten::Url
       result = {
         :name => (doc/".item_name/b").inner_html.to_s.gsub(/<br.*?>/, " "),
         :price => (doc/"span.price2").inner_html.to_s.gsub(/[^\d\.]+/, ""),
-        :image => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
+        :image_url => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
         :description => resize_thumbnail_url(((doc/"div/table/tr/td/table[2]/tr/td/table/tr[2]/td[3]/table[2]/tr/td/table[3]/tr/td/a/img").first || {})[:src]),
         :amount => (doc.search ".soldout_msg").any? ? 0 : (doc/".rest").inner_html.to_s.gsub(/[^\d\.]+/, "").to_i,
         :category_names => (doc/".sdtext a").map { |e| e.inner_html }.uniq.delete("カテゴリトップ")
       }
-      # FIXME: tentative process
-      result[:description] += ", " + result[:category_names] unless result[:category_names].blank?
       result
     end
 

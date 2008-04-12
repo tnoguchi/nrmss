@@ -6,11 +6,7 @@ class Item < ActiveRecord::Base
   # TODO: add images table
   #has_many :images
 
-
-  # TODO: implement
-  def image=(image); end
-
-  def thumbnail_80; description; end
+  def thumbnail_80; image_url; end
 
   # Update item info from public pages in Rakuten
   def update_info_from_rakuten

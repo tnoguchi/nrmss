@@ -25,24 +25,21 @@
     <th colspan="0">(<%= _('Prefrence') %>) <%= _('Description') %></th>
   </tr>
 
-<% for group in @groups %>
-  <tr>
-    <th colspan="0"><hr /></th>
-  </tr>
-  <tr>
+<% @groups.each_with_index do |group, i| %>
+  <tr class="record <%= 'even-record' if i % 2 == 0 %>">
     <td><%=h group.name %></td>
     <!--td><%=h group.description %></td>
     <td><%=h group.preference %></td-->
     <!--td><%=h group.created_at %></td>
     <td><%=h group.updated_at %></td-->
-    <td><%= link_to 'Show', group %></td>
-    <td><%= link_to 'Edit', edit_group_path(group) %></td>
-    <td><%= link_to 'Destroy', group, :confirm => _('Are you sure?'), :method => :delete %></td>
+    <td><%= link_to _('Show'), group %></td>
+    <td><%= link_to _('Edit'), edit_group_path(group) %></td>
+    <td><%= link_to _('Destroy'), group, :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
-  <tr>
+  <tr class="record <%= 'even-record' if i % 2 == 0 %>">
     <td colspan="0">(<%=h group.preference %>) <%=h group.description %></td>
   </tr>
-  <tr>
+  <tr class="record <%= 'even-record' if i % 2 == 0 %>">
     <td colspan="0"><div class="group">
       <%= link_to_function 'Hide items', "Effect.SlideUp($('items_#{group.id}'))", :id => "items_hide_#{group.id}", :style => "display: none" %><%= content_tag :div, (link_to_remote "#{group.items.size.to_s} items in this group", :update => "items_#{group.id}", :url => group_items_path(group), :method => 'get', :success => "$('items_hide_#{group.id}').show()"), :id => "items_#{group.id}", :class => "items" %>
     </div></td>
