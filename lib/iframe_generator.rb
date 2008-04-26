@@ -37,7 +37,9 @@ class IframeGenerator
 
       # ジェネレータ
       ig = IframeGenerator.new
-      Item.find(:all).each do |item|
+      items = Item.find(:all)
+      puts "#{items.size} items to update are found!"
+      items.each do |item|
         item_identifier = item.url.sub(/\A.*?rakuten\...\.jp\/?/, '').sub(/\/\Z/, '').gsub('/', '_')
         item.groups.each do |group|
           suffix = (!group.is_a? Array || group.size == 1) ? '' : "_#{group.id}"
@@ -63,7 +65,7 @@ class IframeGenerator
       if File.exist?(base_dir)
         target_dir = base_dir.sub(/#{File::SEPARATOR}\Z/, '') + File.mtime(base_dir).strftime('_%Y%m%d_%H%M%S')
         puts "#{base_dir.sub(/\A#{RAILS_ROOT}/, '')} -> #{target_dir.sub(/\A#{RAILS_ROOT}/, '')}"
-        File.rename(base_dir, target_dir)
+        FileUtils.cp_r(base_dir, target_dir)
         puts "html file backup was made."
       else
         puts "#{base_dir.sub(/\A#{RAILS_ROOT}/, '')} is not found. No need to backup yet."

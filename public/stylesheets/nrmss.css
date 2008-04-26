@@ -1,0 +1,19 @@
+tr, td, div {
+	padding: 0;
+	margin: 0;
+}
+tr.record td {
+	padding: 5px 4px;
+	color: #333;
+	background-color: #FFF2E6;
+	border-bottom: solid 1px #F7DBC5;
+	border-left: solid 1px #F7DBC5;
+}
+tr.even-record td {
+	background-color: #fff;
+	border-left: solid 1px #ddd;
+}
+
+td.price, td.amount {
+	text-align: right;
+}
