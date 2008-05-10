@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+  map.connect 'items/search_from_rakuten', :controller => 'items', :action => 'search_from_rakuten'
   map.resources :items
 
   map.resources :groups, :has_many => :items

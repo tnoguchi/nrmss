@@ -89,6 +89,37 @@ class ItemsController < ApplicationController
     end
   end
 
+  # /items/search_from_rakuten
+  def search_from_rakuten
+    require 'hpricot'
+    require 'open-uri'
+
+    @items = []
+    unless params[:url].blank?
+      url_list = params[:url].to_a
+      # ページ処理
+      if url_list.first =~ %r{^http://item.rakuten.co.jp/grandvin/c/[\d]+/$}
+        (2..10).each do |i|
+          url_list << params[:url] + "?p=#{i}"
+        end
+      end
+
+      url_list.each do |url|
+        doc = Hpricot(NKF.nkf("-m0 -Ew", open(url).read))
+        @items += doc.search("a").select do |e|
+          e.attributes["href"] =~ %r{^http://item.rakuten.co.jp/[^/]*/[^/]{2,}/$} &&
+            ! e.inner_html.include?('thumbnail.image.rakuten.co.jp')
+        end
+      end
+    end
+    # アンカー名でソート
+    @items.sort! { |a, b| a.inner_html <=> b.inner_html }
+
+    @group_candidates = @items.partitions { |i| i.inner_html.gsub(/[ 　].*$/, '') }
+    # アンカー名でソート
+    @group_candidates.sort! { |a, b| a.first.inner_html <=> b.first.inner_html }
+  end
+
   def update_rakuten_item_info
     @item = Item.find(params[:id])
 

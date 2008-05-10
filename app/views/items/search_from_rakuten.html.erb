@@ -1,0 +1,48 @@
+<h1>Item search from Rakuten</h1>
+
+<div class="search_box">
+  <%- form_tag({ :action => 'search_from_rakuten' }, :method => 'get') do %>
+  URL: <%= text_field_tag :url, h(params[:url]), :size => 100 %>
+  <%= submit_tag "Search", :name => nil %>
+  <%- end -%>
+</div>
+
+<%- if @items -%>
+<p>Summary: <%= h @group_candidates.size %> group candidates, and <%= h @items.size %> items.</p>
+<h2><%= h @group_candidates.size %> group candidates found:</h2>
+<%- @group_candidates.each do |candidate| -%>
+	<dl>
+		<dt><%- grouping_name = candidate.first.inner_html.sub(/[ 　].*$/, '') -%>
+			<%= h grouping_name %>
+			<%- if Group.find(:first, :conditions => [ 'name LIKE ? ', '%' + grouping_name + '%' ]) -%>
+			<span style="color: green;">既にグループはあります。</span>
+			<%- else -%>
+			<span style="color: red;">まだグループはありません。</span>
+			<%- end -%>
+		</dt>
+  <%- candidate.each do |item| -%>
+  <dd><%= h(item.inner_html) %></dd>
+  <%- end -%>
+  </dl>
+<%- end -%>
+
+<div style="display: block;">
+<textarea cols="100" rows="100">
+<%- @group_candidates.each do |candidate| -%>
+<%- grouping_name = candidate.first.inner_html.sub(/[ 　].*$/, '') -%>
+<li><%= link_to grouping_name, "http://esearch.rakuten.co.jp/rms/sd/esearch/vc?sitem=#{u(NKF.nkf('-m0 -We', grouping_name))}&sid=#{#}&sv=6&v=3&f=A" %></li>
+<%- end -%>
+</textarea>
+</div>
+
+<hr />
+<h2><%= h @items.size %> items found:</h2>
+<dl>
+<%- @items.each do |item| -%>
+  <dt></dt>
+  <%= link_to h(item.inner_html.gsub(/<.*><\/.*>/, '')), h(item.attributes['href']) -%></dd>
+<%- end -%>
+</dl>
+<%- end -%>
+
+<%= link_to 'Back', items_path %>
