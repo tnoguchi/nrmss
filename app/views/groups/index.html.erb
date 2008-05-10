@@ -6,7 +6,7 @@
 <hr />
 
 <h2><%= _('Search') %></h2>
-<%- form_tag(:action => 'index') do -%>
+<%- form_tag({:action => 'index'}, :method => 'get') do -%>
 	<%= text_field_tag 'q', nil %>
 	<%= submit_tag _('Search') %>
 <%- end -%>
