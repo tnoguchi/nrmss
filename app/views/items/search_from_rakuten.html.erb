@@ -30,7 +30,7 @@
 <textarea cols="100" rows="100">
 <%- @group_candidates.each do |candidate| -%>
 <%- grouping_name = candidate.first.inner_html.sub(/[ 　].*$/, '') -%>
-<li><%= link_to grouping_name, "http://esearch.rakuten.co.jp/rms/sd/esearch/vc?sitem=#{u(NKF.nkf('-m0 -We', grouping_name))}&sid=#{#}&sv=6&v=3&f=A" %></li>
+<li><%= link_to grouping_name, to_rakuten_esearch_url(NKF.nkf('-m0 -We', grouping_name)) %></li>
 <%- end -%>
 </textarea>
 </div>
