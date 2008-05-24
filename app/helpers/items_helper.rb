@@ -7,7 +7,7 @@ module ItemsHelper
 
   # url for Rakuten in-shop item search
   def to_rakuten_esearch_url(sitem)
-    "http://esearch.rakuten.co.jp/rms/sd/esearch/vc?sitem=#{u(sitem)}&sid=#{#}&sv=6&v=3&f=A"
+    "http://esearch.rakuten.co.jp/rms/sd/esearch/vc?sitem=#{u(sitem)}&sid=#{222798}&sv=6&v=2&f=A"
   end
   
   # the result of the number of page of Rakuten in-shop item search
