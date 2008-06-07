@@ -70,6 +70,18 @@ else
   raise FileNotFound, "#{rms_file} is not found."
 end
 
+# Load nrmss configuration yaml
+module Nrmss
+  @@config = {}
+  mattr_accessor :config
+end
+nmrss_file = File.join(RAILS_ROOT, 'config', 'nrmss.yml')
+if File.exist?(rms_file)
+  Nrmss.config = YAML::load(File.open(rms_file).read)
+else
+  raise FileNotFound, "#{nrmss_file} is not found."
+end
+
 # Ruby-GetText-Package Rail plugin
 require 'gettext/rails' rescue nil
 
