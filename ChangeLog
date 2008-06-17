@@ -1,4 +1,8 @@
-2008-03-15  NOGUCHI, Takuya  <n071316@gmail.com>
+2008-06-17  n071316  <n071316@gmail.com>
+
+	* config/environment.rb: Revert RAILS_GEM_VERSION from 2.0.2 to 2.1.0.
+
+2008-03-15  n071316  <n071316@gmail.com>
 
 	* lib/rakuten/url.rb (Rakuten::update_item_info): Refactor code.
 	(Rakuten::parse_html_to_hash): Split out parsing.
@@ -10,7 +14,7 @@
 
 	* app/models/item.rb (Item::update_info_from_rakuten): Move from Rakuten::Url library.
 
-2008-03-08  NOGUCHI, Takuya  <n071316@gmail.com>
+2008-03-08  n071316  <n071316@gmail.com>
 
 	* config/environment.rb: 
 	* public/stylesheets/related_items.css: Change design.
@@ -29,7 +33,7 @@
 	* po/nrmss.pot: generate pot.
 	* po/ja/nrmss.po: translate po (Japanese only).
 
-2008-03-01    <n071316@gmail.com>
+2008-03-01  n071316  <n071316@gmail.com>
 
 	* lib/iframe_generator.rb (IframeGenerator::initialize):
 	Add new library.
