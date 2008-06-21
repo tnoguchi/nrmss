@@ -13,7 +13,19 @@ class ItemsControllerTest < ActionController::TestCase
   end
 
   def test_should_create_item
+    item_params = {
+      :url => 'http://item.rakuten.co.jp/galiton/jha1128/',
+      :name => 'ハバ社 組立てクーゲルバーン　スターターセット'
+    }
     assert_difference('Item.count') do
+      post :create, :item => item_params
+    end
+
+    assert_redirected_to item_path(assigns(:item))
+  end
+
+  def test_should_not_create_item_without_url
+    assert_difference('Item.count', 0) do
       post :create, :item => { }
     end
 
